@@ -11,6 +11,16 @@ class Productos{
     doesExist (producto){
         return producto.name == this.name && producto.brand == this.brand;
     }
+    showProm (prom){
+        switch(prom){
+            case 0:
+                return "2X1";
+            case 1:
+                return "3X2";
+            case 2:
+                return "50% OFF 2da unidad";
+        }
+    }
 }
 
 //FUNCION PARA CALCULAR TOTAL DEL PRECIO PRODUCTO EN BASE A PROMOCION
@@ -25,8 +35,19 @@ function calculateTotal(producto){
     }
 }
 
-function newProduct (producto){
-    
+function newProduct (){
+    document.body.innerHTML = `<div>
+                                    <label for="">Producto</label>
+                                    <input type="text" id="newAlmacenName">
+                                    <label for="">Marca</label>
+                                    <input type="text" id="newAlmacenBrand">
+                                    <label for="">Precio</label>
+                                    <input type="text" id="newAlmacenPrice">
+                                    <label for="">Promocion</label>
+                                    <input type="text" id="newAmacenPromotion">
+                                    </div>
+                                `
+
 }
 
 function eraseProduct (producto){
@@ -43,7 +64,9 @@ let boxMarket = document.getElementById("marketID");
 if(arrayAuxMarket != null){
     marketArr = JSON.parse(arrayAuxMarket);
     for (let product of marketArr){
-        
+        let newProd = document.createElement("li");
+        newProd.innerHTML = `${product.name}," marca ",${product.brand},"   $",${product.price}, " Tipo de promoción: ", showProm(${product.promotion})
+        <br>`
     }
 }else{
     let marketArr = []; 
@@ -52,6 +75,8 @@ if(arrayAuxMarket != null){
                             <p>¿Desea agregar un producto nuevo?</p>`
     boxMarket.append(noMarketProd);
 }
+let btnNewMarket = document.getElementById("btnNewMarket");
+btnNewMarket.addEventListener("click", newProduct);
 
 
 //LECTURA E INICIALIZACION DE DRINKS
