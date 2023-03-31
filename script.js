@@ -28,14 +28,14 @@ class Productos{
 
 function showProm (prom){
     switch(prom){
-        case 0:
-            return "2X1";
         case 1:
-            return "3X2";
+            return "2X1";
         case 2:
+            return "3X2";
+        case 3:
             return "50% OFF 2da unidad";
         default:
-            return "";
+            return "Sin promociones";
     }
 }
 
