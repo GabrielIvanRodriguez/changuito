@@ -9,21 +9,18 @@ class Productos{
         this.promotion = promotion;
         this.totalPrice = totalPrice;
     }
-}
-
-//FUNCION PARA CALCULAR TOTAL DEL PRECIO PRODUCTO EN BASE A PROMOCION
-
-function calculateTotal(prom, price){
-    switch(prom){
-        case 0:
-            price = price / 2;
-            return price;
-        case 1:
-           price = price * 2 / 3;
-            return price;
-        case 2:
-            price = price / 2;
-            return price;
+    calculateTotal (){
+        switch(this.promotion){
+            case 0:
+                this.totalPrice = this.price / 2;
+                return this.totalPrice;
+            case 1:
+               this.totalPrice = this.price * 2 / 3;
+                return this.totalPrice;
+            case 2:
+                this.totalPrice = this.price / 2;
+                return this.totalPrice;
+        }
     }
 }
 
@@ -48,14 +45,17 @@ function showProd (arr, nod){
     let boxList = nod.querySelector(".listProd");       //CAPTURO LA LISTA
     let boxHeader = nod.querySelector(".header");       //CAPTURO EL ENCABEZADO
 
-    boxHeader.innerHTML=`<span><th>ID</th>
-                            <th>Nombre</th>
-                            <th>Marca</th>
-                            <th>Precio</th>
-                            <th>Promocion</th>
-                            <th>Precio p/unidad aplicando promoción</th></span>
-                            `;                              //RENDERIZO EL ENCABEZADO
-
+    if(arr.length == 0){
+        boxHeader.innerHTML=``;
+    }else{
+        boxHeader.innerHTML=`<span><th>ID</th>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Precio</th>
+        <th>Promocion</th>
+        <th>Precio p/unidad aplicando promoción</th></span>
+        `;                              //RENDERIZO EL ENCABEZADO
+    }
     for (let product of arr){                                       //RENDERIZO LOS PROD DEL ARRAY
         let listAProd = document.createElement("tr");
         listAProd.innerHTML = `<td><p>${product.ident}</p></td>
@@ -68,6 +68,70 @@ function showProd (arr, nod){
                             <br>`
         boxList.append(listAProd);
     }
+    //BORRAR PRODUCTO ALL 
+
+    //CAPTURA DE NODOS Y ASIGNACION DE EVENTOS
+
+    let btnErase = document.querySelectorAll(".eraseProd");
+    for (let bot of btnErase){
+        bot.addEventListener("click", eraseProduct);   
+    }
+}
+
+    //FUNCION PARA BORRAR PRODUCTO
+
+function eraseProduct (nodo){
+
+    let btnSupr = nodo.target;
+    let boxNodo = btnSupr.parentNode.parentNode.parentNode.parentNode.parentNode;
+    let boxName = boxNodo.querySelector("h4").innerText;
+    let listNodo = boxNodo.querySelector(".listProd");
+
+    let rowErase = btnSupr.parentNode.parentNode;
+    let eraseID = rowErase.querySelector("p").textContent;
+
+    function deleteProd(producto){
+        return producto.ident != eraseID;
+    }
+    let filtered;
+    acumulator--;
+    let acumulatorJson = JSON.stringify(acumulator);
+    localStorage.setItem("acumulator",acumulatorJson);
+    switch (boxName){
+        case "Almacen":
+            listNodo.innerHTML=``;
+            filtered = marketArr.filter(deleteProd);
+            marketArr = filtered;
+            let marketJson = JSON.stringify(marketArr);
+            localStorage.setItem("marketArr",marketJson);
+            showProd(marketArr,boxNodo);
+            break;
+        case "Bebidas":
+            listNodo.innerHTML=``;
+            filtered = drinksArr.filter(deleteProd);
+            drinksArr = filtered;
+            let drinksJson = JSON.stringify(drinksArr);
+            localStorage.setItem("drinksArr",drinksJson);
+            showProd(drinksArr,boxNodo);
+            break;       
+        case "Limpieza":
+            listNodo.innerHTML=``;
+            filtered = cleaningArr.filter(deleteProd);
+            cleaningArr = filtered;
+            let cleaningJson = JSON.stringify(cleaningArr);
+            localStorage.setItem("cleaningArr",cleaningJson);
+            showProd(cleaningArr,boxNodo);
+            break;  
+        case "Cuidado personal":
+            listNodo.innerHTML=``;
+            filtered = personalCareArr.filter(deleteProd);
+            personalCareArr = filtered;
+            let personalJson = JSON.stringify(personalArr);
+            localStorage.setItem("personalArr",personalJson);
+            showProd(personalCareArr,boxNodo);
+            break;  
+        }
+
 }
 
     //FUNCION PARA NUEVO PRODUCTO TODAS LAS CATEGORIAS
@@ -100,11 +164,11 @@ function newProduct (nod){
         
         //CREACION DEL PRODUCTO
 
-        let totalPri = calculateTotal(prodProm, prodPrice);
         acumulator++;
         let acumulatorJson = JSON.stringify(acumulator);
         localStorage.setItem("acumulator",acumulatorJson);
-        let producto = new Productos (acumulator,prodName, prodBrand, prodPrice, prodProm, totalPri);
+        let producto = new Productos (acumulator,prodName, prodBrand, prodPrice, prodProm, 0);
+        producto.totalPrice = producto.calculateTotal();
         aux2.innerHTML=``; 
         switch (nameBox){
             case "Almacen":
@@ -144,51 +208,6 @@ function newProduct (nod){
                                 <button><a href="index.html">Volver</a></button>`
         }
     }
-/*
-function deleteProd(productAux){
-    return productAux.ident != erasedProd;
-}
-
-function eraseProduct (nodo){
-
-    let btnSupr = nodo.target;
-    let boxNodo = btnSupr.parentNode.parentNode.parentNode.parentNode.parentNode;
-    let boxName = boxNodo.querySelector("h4").innerText;
-    let listNodo = boxNodo.querySelector(".listProd");
-
-    let qitProd = btnSupr.parentNode.parentNodet;
-    let erasedProd = qitProd.querySelector("p").textContent;
-
-    switch (boxName){
-        case "Almacen":
-            listNodo.innerHTML=``;
-            let filtered = marketArr.filter(deleteProd);
-            marketArr = filtered;
-            showProd(marketArr,boxName);
-            break;
-        case "Bebidas":
-            listNodo.innerHTML=``;
-            let filtered = drinksArr.filter(deleteProd);
-            drinksArr = filtered;
-            showProd(drinksArr,boxName);
-            break;       
-        case "Limpieza":
-            listNodo.innerHTML=``;
-            let filtered = cleaningArr.filter(deleteProd);
-            cleaningArr = filtered;
-            showProd(cleaningArr,boxName);
-            break;  
-        case "Cuidado personal":
-            listNodo.innerHTML=``;
-            let filtered = personalCareArr.filter(deleteProd);
-            personalCareArr = filtered;
-            showProd(personalCareArr,boxName);
-            break;  
-        }
-
-}
-*/
-
 
 //TODO MARKET
 
@@ -202,6 +221,7 @@ let auxMarket = marketBox.querySelector(".aux");
 
     let marketArr = [];
 
+    showProd(marketArr,marketBox);
 
     if(localStorage.getItem("marketArr") == null){
         let marketJson = JSON.stringify(marketArr);
@@ -224,7 +244,7 @@ let auxMarket = marketBox.querySelector(".aux");
         }
     }
 
- //TODO DRINKS
+//TODO DRINKS
 
     // CAPTURA NODOS DRINKS
 
@@ -347,12 +367,6 @@ for (let boton of btnNewProd){
     boton.addEventListener("click", newProduct);
 }
 
-/*
-//BORRAR PRODUCTO ALL 
 
-    //CAPTURA DE NODOS Y ASIGNACION DE EVENTOS
-let btnErase = document.querySelectorAll(".eraseProd");
-for (let bot of btnErase){
-    bot.addEventListener("click", eraseProduct);
-}
-*/
+
+
