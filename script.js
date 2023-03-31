@@ -11,14 +11,17 @@ class Productos{
     }
     calculateTotal (){
         switch(this.promotion){
-            case 0:
-                this.totalPrice = this.price / 2;
-                return this.totalPrice;
             case 1:
-               this.totalPrice = this.price * 2 / 3;
+                this.totalPrice = this.price / 2;
                 return this.totalPrice;
             case 2:
+               this.totalPrice = this.price * 2 / 3;
+                return this.totalPrice;
+            case 3:
                 this.totalPrice = this.price / 2;
+                return this.totalPrice;
+            default:
+                this.totalPrice = this.price;
                 return this.totalPrice;
         }
     }
@@ -154,9 +157,10 @@ function newProduct (nod){
     let prodPrice = Number(inputs.querySelector(".priceProduct").value);
     let prodProm = Number(inputs.querySelector(".promotionProduct").value);
 
+
     //VALIDACION DE INGRESO, SI INGRESA MAL NO TENDRIA QUE PUSHEAR NI GRABAR
 
-    if (typeof prodPrice == 'string' || typeof prodProm == 'string'){
+    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
         document.body.innerHTML=`<h2>Uno o más datos ingresados fueron incorrectos.</h2>
                                 <p>Por favor, ingrese los datos correctamente.</p>
                                 <button><a href="index.html">Volver</a></button>`
