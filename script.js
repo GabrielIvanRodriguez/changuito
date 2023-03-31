@@ -157,14 +157,15 @@ function newProduct (nod){
     let prodPrice = Number(inputs.querySelector(".priceProduct").value);
     let prodProm = Number(inputs.querySelector(".promotionProduct").value);
 
-
+    prodName = prodName.trim();
+    prodBrand = prodBrand.trim();
     //VALIDACION DE INGRESO, SI INGRESA MAL NO TENDRIA QUE PUSHEAR NI GRABAR
 
     if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
         document.body.innerHTML=`<h2>Uno o más datos ingresados fueron incorrectos.</h2>
                                 <p>Por favor, ingrese los datos correctamente.</p>
                                 <button><a href="index.html">Volver</a></button>`
-    }else if(prodProm == 0 || prodProm ==1 || prodProm == 2){
+    }else if(prodProm == 1 || prodProm ==2 || prodProm == 3){
         
         //CREACION DEL PRODUCTO
 
