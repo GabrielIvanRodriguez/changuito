@@ -1,125 +1,137 @@
 
+/* Reset de estilos */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-  }
-/* tamaño de fuente predeterminado y la familia de fuente */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* Estilos generales */
 body {
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Configuración de los encabezados */
-  h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  h4 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Configuración de las tablas */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-  }
-  
-  thead {
-    background-color: #f5f5f5;
-  }
-  
-  th,
-  td {
-    padding: 0.5rem;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  /* Estilización de los botones y campos de entrada */
-  button,
-  input {
-    border: none;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .btnNewProd {
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-  }
-  
-  .btnNewProd:hover {
-    background-color: #3e8e41;
-  }
-  
-  /* Estilización de los campos de entrada */
-  input[type="text"],
-  input[type="number"] {
-    border: none;
-    border-bottom: 2px solid #4CAF50;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-  }
-  
-  input[type="text"]:focus,
-  input[type="number"]:focus {
-    outline: none;
-    border-bottom: 2px solid #3e8e41;
-  }
-  
-  /* Configuración del contenedor principal */
-  #Categories {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-  
-  /* Configuración del contenedor de cada categoría */
-  fieldset {
-    border: none;
-    padding: 0;
-    margin-bottom: 2rem;
-  }
-  
-  /* Configuración del contenedor del producto */
-  #market,
-  #drinks,
-  #cleaning,
-  #personalCare {
-    margin-bottom: 2rem;
-  }
-  
-  /* Configuración de la leyenda */
-  legend {
-    display: none;
-  }
-  
-  /* Configuración de los mensajes de promoción */
-  fieldset p {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #222;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos para la sección Categories */
+#Categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#Categories h3 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#Categories > div {
+  flex-basis: calc(25% - 20px);
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+#Categories > div:last-of-type {
+  margin-right: 0;
+}
+
+#Categories table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#Categories table th,
+#Categories table td {
+  padding: 10px;
+  border: 1px solid #222;
+  text-align: center;
+}
+
+#Categories table th {
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
+}
+
+#Categories .inputs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+#Categories .inputs label {
+  flex-basis: 100%;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+#Categories .inputs input {
+  flex-basis: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #222;
+}
+
+#Categories .btnNewProd {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#Categories .btnNewProd:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+#Categories fieldset {
+  border: none;
+  margin-bottom: 20px;
+}
+
+#Categories fieldset p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilos específicos para los div de market, drinks, cleaning y personalCare */
+#market,
+#drinks,
+#cleaning,
+#personalCare {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #222;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#market h4,
+#drinks h4,
+#cleaning h4,
+#personalCare h4 {
+  flex-basis: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}

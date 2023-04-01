@@ -97,9 +97,7 @@ function eraseProduct (nodo){
         return producto.ident != eraseID;
     }
     let filtered;
-    acumulator--;
-    let acumulatorJson = JSON.stringify(acumulator);
-    localStorage.setItem("acumulator",acumulatorJson);
+
     switch (boxName){
         case "Almacen":
             listNodo.innerHTML=``;
@@ -125,12 +123,12 @@ function eraseProduct (nodo){
             localStorage.setItem("cleaningArr",cleaningJson);
             showProd(cleaningArr,boxNodo);
             break;  
-        case "Cuidado personal":
+        case "CuidadoPersonal":
             listNodo.innerHTML=``;
             filtered = personalCareArr.filter(deleteProd);
             personalCareArr = filtered;
-            let personalJson = JSON.stringify(personalArr);
-            localStorage.setItem("personalArr",personalJson);
+            let personalJson = JSON.stringify(personalCareArr);
+            localStorage.setItem("personalCareArr",personalJson);
             showProd(personalCareArr,boxNodo);
             break;  
         }
@@ -199,10 +197,10 @@ function newProduct (nod){
                 break;
             case "CuidadoPersonal":
                 listNod.innerHTML=``;
-                personalArr.push(producto);
-                let personalJson = JSON.stringify(personalArr);
-                localStorage.setItem("personalArr",personalJson);
-                showProd(personalArr,boxNod);
+                personalCareArr.push(producto);
+                let personalJson = JSON.stringify(personalCareArr);
+                localStorage.setItem("personalCareArr",personalJson);
+                showProd(personalCareArr,boxNod);
                 break;
             }
         }else{
@@ -327,20 +325,20 @@ let auxDrinks = drinksBox.querySelector(".aux");
     
         //LECTURA E INICIALIZACION PERSONAL CARE
     
-        let personalArr = [];
+        let personalCareArr = [];
     
     
-        if(localStorage.getItem("personalArr") == null){
-            let personalJson = JSON.stringify(personalArr);
-            localStorage.setItem("personalArr",personalJson);
+        if(localStorage.getItem("personalCareArr") == null){
+            let personalJson = JSON.stringify(personalCareArr);
+            localStorage.setItem("personalCareArr",personalJson);
             let emptyPersonal = document.createElement("div");
             emptyPersonal.innerHTML =`<p>La lista de precios de productos de Cuidado personal aún se encuentra vacía</p>
                                     <p>¿Desea agregar un producto nuevo?</p>`
             auxPersonal.append(emptyPersonal);
         }else{
-            personalArr = localStorage.getItem("personalArr");
-            personalArr = JSON.parse(personalArr);
-            if(personalArr.length == 0){        
+            personalCareArr = localStorage.getItem("personalCareArr");
+            personalCareArr = JSON.parse(personalCareArr);
+            if(personalCareArr.length == 0){        
                 let emptyPersonal = document.createElement("div");
                 emptyPersonal.innerHTML =`<p>La lista de precios de productos de Cuidado personal aún se encuentra vacía</p>
                                         <p>¿Desea agregar un producto nuevo?</p>`
