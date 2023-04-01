@@ -345,7 +345,7 @@ let auxDrinks = drinksBox.querySelector(".aux");
                 auxPersonal.append(emptyPersonal);
             }else{
                 auxPersonal.innerHTML=``;
-                showProd(personalArr,personalBox);
+                showProd(personalCareArr,personalBox);
             }
         }
     
