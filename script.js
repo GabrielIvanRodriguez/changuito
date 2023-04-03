@@ -181,7 +181,7 @@ function newProduct (nod){
     if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || prodSuper == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
         Swal.fire({
             title: "Producto no agregado",
-            text: "El campo nombre, marca y supermercado del producto no pueden estar vacios",
+            text: "Todos los campos deben estar completos",
             icon: "error",
             confirmButtonText:"Volver",
             color: "rgb(209, 255, 255)",
