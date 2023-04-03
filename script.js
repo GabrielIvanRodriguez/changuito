@@ -85,6 +85,14 @@ function showProd (arr, nod){
 
 function eraseProduct (nodo){
 
+    Toastify({
+        text:"Producto eliminado",
+        gravity:"bottom",
+        style:{
+            background: "#5e0000"
+        }
+    }).showToast();
+
     let btnSupr = nodo.target;
     let boxNodo = btnSupr.parentNode.parentNode.parentNode.parentNode.parentNode;
     let boxName = boxNodo.querySelector("h4").innerText;
@@ -135,6 +143,9 @@ function eraseProduct (nodo){
 
 }
 
+    //FUNCION BUSCAR PRODUCTO
+    
+
     //FUNCION PARA NUEVO PRODUCTO TODAS LAS CATEGORIAS
 
 function newProduct (nod){
@@ -150,8 +161,8 @@ function newProduct (nod){
 
     //CAPTURA DE INPUTS
 
-    let prodName = inputs.querySelector(".nameProduct").value;
-    let prodBrand = inputs.querySelector(".brandProduct").value;
+    let prodName = inputs.querySelector(".nameProduct").value.toUpperCase();
+    let prodBrand = inputs.querySelector(".brandProduct").value.toUpperCase();
     let prodPrice = Number(inputs.querySelector(".priceProduct").value);
     let prodProm = Number(inputs.querySelector(".promotionProduct").value);
 
@@ -160,55 +171,106 @@ function newProduct (nod){
     //VALIDACION DE INGRESO, SI INGRESA MAL NO TENDRIA QUE PUSHEAR NI GRABAR
 
     if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
-        document.body.innerHTML=`<h2>Uno o más datos ingresados fueron incorrectos.</h2>
-                                <p>Por favor, ingrese los datos correctamente.</p>
-                                <button><a href="index.html">Volver</a></button>`
+        Swal.fire({
+            title: "Producto no agregado",
+            text: "El campo nombre y marca del producto no pueden estar vacios",
+            icon: "error",
+            confirmButtonText:"Volver",
+            color: "rgb(209, 255, 255)",
+            background:"#4d4d4d",
+            showClass: {
+                popup:"animate__animated animate__zoomIn"
+            },
+            hideClass:{
+                pop:"animate__animated animate__zoomOut"
+            }
+        });
     }else if(prodProm == 1 || prodProm ==2 || prodProm == 3){
         
-        //CREACION DEL PRODUCTO
+        let allowMarket = marketArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
+        let allowDrinks = drinksArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
+        let allowCleaning = cleaningArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
+        let allowPersonal = personalCareArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
 
-        acumulator++;
-        let acumulatorJson = JSON.stringify(acumulator);
-        localStorage.setItem("acumulator",acumulatorJson);
-        let producto = new Productos (acumulator,prodName, prodBrand, prodPrice, prodProm, 0);
-        producto.totalPrice = producto.calculateTotal();
-        aux2.innerHTML=``; 
-        switch (nameBox){
-            case "Almacen":
-                listNod.innerHTML=``;
-                marketArr.push(producto);
-                let marketJson = JSON.stringify(marketArr);
-                localStorage.setItem("marketArr",marketJson);          
-                showProd(marketArr,boxNod);
-                break;
-            case "Bebidas":
-                listNod.innerHTML=``;
-                drinksArr.push(producto);
-                let drinksJson = JSON.stringify(drinksArr);
-                localStorage.setItem("drinksArr",drinksJson);
-                showProd(drinksArr,boxNod);
-                break;
-            case "Limpieza":
-                listNod.innerHTML=``;
-                cleaningArr.push(producto);
-                let cleaningJson = JSON.stringify(cleaningArr);
-                localStorage.setItem("cleaningArr",cleaningJson);
-                showProd(cleaningArr,boxNod);
-                break;
-            case "Cuidado Personal":
-                listNod.innerHTML=``;
-                personalCareArr.push(producto);
-                let personalJson = JSON.stringify(personalCareArr);
-                localStorage.setItem("personalCareArr",personalJson);
-                showProd(personalCareArr,boxNod);
-                break;
-            }
+        if(allowMarket === undefined && allowDrinks === undefined && allowCleaning === undefined && allowPersonal === undefined){
+            
+                //CREACION DEL PRODUCTO
+            acumulator++;
+            let acumulatorJson = JSON.stringify(acumulator);
+            localStorage.setItem("acumulator",acumulatorJson);
+            let producto = new Productos (acumulator,prodName, prodBrand, prodPrice, prodProm, 0);
+            producto.totalPrice = producto.calculateTotal();
+            aux2.innerHTML=``; 
+            switch (nameBox){
+                case "Almacen":
+                    listNod.innerHTML=``;
+                    marketArr.push(producto);
+                    let marketJson = JSON.stringify(marketArr);
+                    localStorage.setItem("marketArr",marketJson);          
+                    showProd(marketArr,boxNod);
+                    break;
+                case "Bebidas":
+                    listNod.innerHTML=``;
+                    drinksArr.push(producto);
+                    let drinksJson = JSON.stringify(drinksArr);
+                    localStorage.setItem("drinksArr",drinksJson);
+                    showProd(drinksArr,boxNod);
+                    break;
+                case "Limpieza":
+                    listNod.innerHTML=``;
+                    cleaningArr.push(producto);
+                    let cleaningJson = JSON.stringify(cleaningArr);
+                    localStorage.setItem("cleaningArr",cleaningJson);
+                    showProd(cleaningArr,boxNod);
+                    break;
+                case "Cuidado Personal":
+                    listNod.innerHTML=``;
+                    personalCareArr.push(producto);
+                    let personalJson = JSON.stringify(personalCareArr);
+                    localStorage.setItem("personalCareArr",personalJson);
+                    showProd(personalCareArr,boxNod);
+                    break;
+                }
+            Toastify({
+                text:"Producto agregado",
+                gravity:"bottom",
+                style:{
+                    background: "#00610d"
+                }
+            }).showToast();
         }else{
-            document.body.innerHTML=`<h2>Las promociones deben ser</h2>
-                                <p>0 para 2x1</p>
-                                <p>1 para 3x2</p>
-                                <p>2 para 50% off en la 2da unidad</p>
-                                <button><a href="index.html">Volver</a></button>`
+            Swal.fire({
+                title: "Producto no agregado",
+                text: "El producto ya existe",
+                icon: "error",
+                confirmButtonText:"Volver",
+                color: "rgb(209, 255, 255)",
+                background:"#4d4d4d",
+                showClass: {
+                    popup:"animate__animated animate__zoomIn"
+                },
+                hideClass:{
+                    pop:"animate__animated animate__zoomOut"
+                }
+            });
+        }
+
+        
+        }else{
+            Swal.fire({
+                title: "Producto no agregado",
+                text: "La promocion ingresada es invalida",
+                icon: "error",
+                confirmButtonText:"Volver",
+                color: "rgb(209, 255, 255)",
+                background:"#4d4d4d",
+                showClass: {
+                    popup:"animate__animated animate__zoomIn"
+                },
+                hideClass:{
+                    pop:"animate__animated animate__zoomOut"
+                }
+            });
         }
     }
 
@@ -386,6 +448,27 @@ for (let boton of btnNewProd){
     boton.addEventListener("click", newProduct);
 }
 
+//MOSTRAR CLIMA HOY
 
+let boxWeather = document.querySelector(".weather");
+
+function showWeather (clientPosition){
+
+    let lat = clientPosition.coords.latitude;
+    let long = clientPosition.coords.longitude;
+    let apiKey = "4de9a81f4a89b43687bddc615941a605";
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric&lang=es`)
+        .then(response => response.json())
+        .then(data=>{
+            boxWeather.innerHTML=`<p>${data.name}</p>
+                                <div>
+                                    <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png"> 
+                                    <p>${data.main.temp}° ${data.weather[0].description}</p>
+                                </div>`
+        })
+}
+
+navigator.geolocation.getCurrentPosition(showWeather);
 
 

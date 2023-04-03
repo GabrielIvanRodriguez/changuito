@@ -4,13 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Changuito</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>¡Conoce Changuito!</h1>
-    <h2>Un sitio que condensa los distintos precios de productos de muchos supermercados</h2>
-
+    <header>
+            <h1>¡Conoce Changuito!</h1>
+            <h2>Un sitio que condensa los distintos precios de productos de muchos supermercados</h2>  
+    </header>
+    <nav>
+        <ul class="nav">
+            <li><a href="#market">Almacen</a></li>
+            <li><a href="#drinks">Bebidas</a></li>
+            <li><a href="#cleaning">Limpieza</a></li>
+            <li><a href="#personalCare">Cuidado Personal</a></li>
+        </ul>
+        <div class="weather">
+        </div>
+    </nav>
     <div id="Categories">
         <h3>Categorías</h3>
         <div>
@@ -138,7 +152,8 @@
             </fieldset>
         </div>  
     </div>
-
+    <script src="sweetalert2.all.min.js"></script>	
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="script.js"></script>
 </body>
 </html>
