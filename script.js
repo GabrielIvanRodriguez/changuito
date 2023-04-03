@@ -1,13 +1,15 @@
 
 //CLASE PRODUCTOS
 class Productos{
-    constructor(ident,name,brand,price,promotion,totalPrice){
+    constructor(ident,name,brand,price,promotion,totalPrice,supermarket){
         this.ident = ident;
         this.name = name;
         this.brand = brand;
         this.price = price;
         this.promotion = promotion;
         this.totalPrice = totalPrice;
+        this.supermarket= supermarket;
+
     }
     calculateTotal (){
         switch(this.promotion){
@@ -56,7 +58,8 @@ function showProd (arr, nod){
         <th>Marca</th>
         <th>Precio</th>
         <th>Promocion</th>
-        <th>Precio p/unidad aplicando promoción</th></span>
+        <th>Precio p/unidad aplicando promoción</th>
+        <th>Supermercado</th></span>
         `;                              //RENDERIZO EL ENCABEZADO
     }
     for (let product of arr){                                       //RENDERIZO LOS PROD DEL ARRAY
@@ -66,7 +69,8 @@ function showProd (arr, nod){
                             <td>${product.brand}</td>
                             <td>$${product.price}</td>
                             <td>${showProm(product.promotion)}</td>
-                            <td>$${product.totalPrice}</td>
+                            <td>$ ${product.totalPrice}</td>
+                            <td>${product.supermarket}</td>
                             <td><button class="eraseProd">Borrar</button></td>
                             <br>`
         boxList.append(listAProd);
@@ -165,15 +169,19 @@ function newProduct (nod){
     let prodBrand = inputs.querySelector(".brandProduct").value.toUpperCase();
     let prodPrice = Number(inputs.querySelector(".priceProduct").value);
     let prodProm = Number(inputs.querySelector(".promotionProduct").value);
+    let prodSuper = inputs.querySelector("select").value.toUpperCase();
+    
+
+
 
     prodName = prodName.trim();
     prodBrand = prodBrand.trim();
     //VALIDACION DE INGRESO, SI INGRESA MAL NO TENDRIA QUE PUSHEAR NI GRABAR
 
-    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
+    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || prodSuper == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
         Swal.fire({
             title: "Producto no agregado",
-            text: "El campo nombre y marca del producto no pueden estar vacios",
+            text: "El campo nombre, marca y supermercado del producto no pueden estar vacios",
             icon: "error",
             confirmButtonText:"Volver",
             color: "rgb(209, 255, 255)",
@@ -187,10 +195,10 @@ function newProduct (nod){
         });
     }else if(prodProm == 1 || prodProm ==2 || prodProm == 3){
         
-        let allowMarket = marketArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
-        let allowDrinks = drinksArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
-        let allowCleaning = cleaningArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
-        let allowPersonal = personalCareArr.find(prod => prod.name === prodName && prod.brand === prodBrand);
+        let allowMarket = marketArr.find(prod => prod.name === prodName && prod.brand === prodBrand && prod.supermarket === prodSuper);
+        let allowDrinks = drinksArr.find(prod => prod.name === prodName && prod.brand === prodBrand && prod.supermarket === prodSuper);
+        let allowCleaning = cleaningArr.find(prod => prod.name === prodName && prod.brand === prodBrand && prod.supermarket === prodSuper);
+        let allowPersonal = personalCareArr.find(prod => prod.name === prodName && prod.brand === prodBrand && prod.supermarket === prodSuper);
 
         if(allowMarket === undefined && allowDrinks === undefined && allowCleaning === undefined && allowPersonal === undefined){
             
@@ -198,7 +206,7 @@ function newProduct (nod){
             acumulator++;
             let acumulatorJson = JSON.stringify(acumulator);
             localStorage.setItem("acumulator",acumulatorJson);
-            let producto = new Productos (acumulator,prodName, prodBrand, prodPrice, prodProm, 0);
+            let producto = new Productos (acumulator,prodName, prodBrand, prodPrice, prodProm, 0, prodSuper);
             producto.totalPrice = producto.calculateTotal();
             aux2.innerHTML=``; 
             switch (nameBox){
@@ -441,7 +449,26 @@ if (localStorage.getItem("acumulator")==null){
     acumulator = JSON.parse(acumulator);
 }
 
-    //CAPTURA DE NODOS Y ASIGNACIÓN DE EVENTOS
+//CAPTURA DE NODOS Y ASIGNACIÓN DE EVENTOS
+
+let prodSuper = document.getElementById("supermarkets");
+
+prodSuper.addEventListener("change",function (e){
+    switch(e.target.value){
+        case "kilbel":
+            prodSuper = "Kilbel";
+            break;
+        case "tunel":
+            prodSuper = "El Tunel";
+            break;
+        case "makro":
+            prodSuper = "Makro";
+            break;
+        case "walmart":
+            prodSuper = "Walt-Mart";
+            break;
+    }
+});
 
 let btnNewProd = document.querySelectorAll(".btnNewProd");
 for (let boton of btnNewProd){
