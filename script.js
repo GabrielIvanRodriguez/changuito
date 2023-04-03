@@ -123,7 +123,7 @@ function eraseProduct (nodo){
             localStorage.setItem("cleaningArr",cleaningJson);
             showProd(cleaningArr,boxNodo);
             break;  
-        case "CuidadoPersonal":
+        case "Cuidado Personal":
             listNodo.innerHTML=``;
             filtered = personalCareArr.filter(deleteProd);
             personalCareArr = filtered;
@@ -195,7 +195,7 @@ function newProduct (nod){
                 localStorage.setItem("cleaningArr",cleaningJson);
                 showProd(cleaningArr,boxNod);
                 break;
-            case "CuidadoPersonal":
+            case "Cuidado Personal":
                 listNod.innerHTML=``;
                 personalCareArr.push(producto);
                 let personalJson = JSON.stringify(personalCareArr);
@@ -230,16 +230,20 @@ let auxMarket = marketBox.querySelector(".aux");
         let marketJson = JSON.stringify(marketArr);
         localStorage.setItem("marketArr",marketJson);
         let emptyMarket = document.createElement("div");
-        emptyMarket.innerHTML =`<p>La lista de precios de productos de almacen aún se encuentra vacía</p>
-                                <p>¿Desea agregar un producto nuevo?</p>`
+        emptyMarket.innerHTML =`<div class="emptyList">
+                                <p>La lista de precios de productos de Almacen aún se encuentra vacía</p>
+                                <p>¿Desea agregar un producto nuevo?</p>
+                                </div>`
         auxMarket.append(emptyMarket);
     }else{
         marketArr = localStorage.getItem("marketArr");
         marketArr = JSON.parse(marketArr);
         if(marketArr.length == 0){        
             let emptyMarket = document.createElement("div");
-            emptyMarket.innerHTML =`<p>La lista de precios de productos de almacen aún se encuentra vacía</p>
-                                    <p>¿Desea agregar un producto nuevo?</p>`
+            emptyMarket.innerHTML =`<div class="emptyList">
+                                    <p>La lista de precios de productos de Almacen aún se encuentra vacía</p>
+                                    <p>¿Desea agregar un producto nuevo?</p>
+                                    </div>`
             auxMarket.append(emptyMarket);
         }else{
             auxMarket.innerHTML=``;
@@ -264,16 +268,20 @@ let auxDrinks = drinksBox.querySelector(".aux");
         let drinksJson = JSON.stringify(drinksArr);
         localStorage.setItem("drinksArr",drinksJson);
         let emptyDrinks = document.createElement("div");
-        emptyDrinks.innerHTML =`<p>La lista de precios de productos Bebibles aún se encuentra vacía</p>
-                                <p>¿Desea agregar un producto nuevo?</p>`
+        emptyDrinks.innerHTML =`<div class="emptyList">
+                                <p>La lista de precios de productos de Bebidas aún se encuentra vacía</p>
+                                <p>¿Desea agregar un producto nuevo?</p>
+                                </div>`
         auxDrinks.append(emptyDrinks);
     }else{
         drinksArr = localStorage.getItem("drinksArr");
         drinksArr = JSON.parse(drinksArr);
         if(drinksArr.length == 0){        
             let emptyDrinks = document.createElement("div");
-            emptyDrinks.innerHTML =`<p>La lista de precios de productos Bebibles aún se encuentra vacía</p>
-                                    <p>¿Desea agregar un producto nuevo?</p>`
+            emptyDrinks.innerHTML =`<div class="emptyList">
+                                    <p>La lista de precios de productos de Bebidas aún se encuentra vacía</p>
+                                    <p>¿Desea agregar un producto nuevo?</p>
+                                    </div>`
             auxDrinks.append(emptyDrinks);
         }else{
             auxDrinks.innerHTML=``;
@@ -298,16 +306,20 @@ let auxDrinks = drinksBox.querySelector(".aux");
             let cleaningJson = JSON.stringify(cleaningArr);
             localStorage.setItem("cleaningArr",cleaningJson);
             let emptyCleaning = document.createElement("div");
-            emptyCleaning.innerHTML =`<p>La lista de precios de productos de Limpieza aún se encuentra vacía</p>
-                                    <p>¿Desea agregar un producto nuevo?</p>`
+            emptyCleaning.innerHTML =`<div class="emptyList">
+                                    <p>La lista de precios de productos de Limpieza aún se encuentra vacía</p>
+                                    <p>¿Desea agregar un producto nuevo?</p>
+                                    </div>`
             auxCleaning.append(emptyCleaning);
         }else{
             cleaningArr = localStorage.getItem("cleaningArr");
             cleaningArr = JSON.parse(cleaningArr);
             if(cleaningArr.length == 0){        
                 let emptyCleaning = document.createElement("div");
-                emptyCleaning.innerHTML =`<p>La lista de precios de productos de Limpieza aún se encuentra vacía</p>
-                                        <p>¿Desea agregar un producto nuevo?</p>`
+                emptyCleaning.innerHTML =`<div class="emptyList">
+                                        <p>La lista de precios de productos de Limpieza aún se encuentra vacía</p>
+                                        <p>¿Desea agregar un producto nuevo?</p>
+                                        </div>`
                 auxCleaning.append(emptyCleaning);
             }else{
                 auxCleaning.innerHTML=``;
@@ -332,16 +344,20 @@ let auxDrinks = drinksBox.querySelector(".aux");
             let personalJson = JSON.stringify(personalCareArr);
             localStorage.setItem("personalCareArr",personalJson);
             let emptyPersonal = document.createElement("div");
-            emptyPersonal.innerHTML =`<p>La lista de precios de productos de Cuidado personal aún se encuentra vacía</p>
-                                    <p>¿Desea agregar un producto nuevo?</p>`
+            emptyPersonal.innerHTML =`<div class="emptyList">
+                                    <p>La lista de precios de productos de Cuidado personal aún se encuentra vacía</p>
+                                    <p>¿Desea agregar un producto nuevo?</p>
+                                    </div>`
             auxPersonal.append(emptyPersonal);
         }else{
             personalCareArr = localStorage.getItem("personalCareArr");
             personalCareArr = JSON.parse(personalCareArr);
             if(personalCareArr.length == 0){        
                 let emptyPersonal = document.createElement("div");
-                emptyPersonal.innerHTML =`<p>La lista de precios de productos de Cuidado personal aún se encuentra vacía</p>
-                                        <p>¿Desea agregar un producto nuevo?</p>`
+                emptyPersonal.innerHTML =`<div class="emptyList">
+                                        <p>La lista de precios de productos de Cuidado personal aún se encuentra vacía</p>
+                                        <p>¿Desea agregar un producto nuevo?</p>
+                                        </div>`
                 auxPersonal.append(emptyPersonal);
             }else{
                 auxPersonal.innerHTML=``;
