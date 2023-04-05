@@ -116,24 +116,6 @@ table {
   margin-bottom: 1rem;
 }
 
-.promDiv{
-  display:flex;
-  justify-content: center;
-  margin-top: 15px;
-}
-
-.promBox{
-  display:block; 
-  text-align: center;
-  font-size: 19px;
-  letter-spacing: 1px;
-  color: rgb(209, 255, 255);
-  height: 4rem;
-  width: 35rem;
-  background-color: #252529;
-  padding-top: 5px;
-}
-
 th,
 td {
   text-align: left;

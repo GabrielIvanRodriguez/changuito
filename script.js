@@ -13,36 +13,43 @@ class Productos{
     }
     calculateTotal (){
         switch(this.promotion){
-            case 1:
-                this.totalPrice = this.price / 2;
-                return this.totalPrice;
-            case 2:
-               this.totalPrice = this.price * 2 / 3;
-                return this.totalPrice;
-            case 3:
-                this.totalPrice = this.price / 2;
-                return this.totalPrice;
-            default:
+            case "SIN PROMOCION":
                 this.totalPrice = this.price;
                 return this.totalPrice;
+            case "2X1":
+                this.totalPrice = this.price /2;
+                return this.totalPrice;
+            case "3X2":
+                this.totalPrice = this.price *2 /3;
+                return this.totalPrice;
+            case "50% OFF EN LA 2DA UNIDAD":
+                this.totalPrice = this.price /2;
+                return this.totalPrice;
+            case "10% OFF":
+                this.totalPrice = this.price * 0.9;
+                return this.totalPrice;
+            case "15% OFF":
+                this.totalPrice = this.price * 0.85;
+                return this.totalPrice;
+            case "20% OFF":
+                this.totalPrice = this.price * 0.8;
+                return this.totalPrice;
+            case "25% OFF":
+                this.totalPrice = this.price *0.75;
+                return this.totalPrice;
+            case "30% OFF":
+                this.totalPrice = this.price *0.70;
+                return this.totalPrice;
+            case "35% OFF":
+                this.totalPrice = this.price *0.65;
+                return this.totalPrice;
+            case "40% OFF":
+                this.totalPrice = this.price *0.6;
+                return this.totalPrice
         }
     }
 }
 
-    //FUNCION PARA MOSTRAR PROMOCIONES
-
-function showProm (prom){
-    switch(prom){
-        case 1:
-            return "2X1";
-        case 2:
-            return "3X2";
-        case 3:
-            return "50% OFF 2da unidad";
-        default:
-            return "Sin promociones";
-    }
-}
 
     //FUNCION PARA RENDERIZAR EL LISTADO DE PRODUCTOS
 
@@ -68,7 +75,7 @@ function showProd (arr, nod){
                             <td>${product.name}</td>
                             <td>${product.brand}</td>
                             <td>$${product.price}</td>
-                            <td>${showProm(product.promotion)}</td>
+                            <td>${product.promotion}</td>
                             <td>$ ${product.totalPrice}</td>
                             <td>${product.supermarket}</td>
                             <td><button class="eraseProd">Borrar</button></td>
@@ -105,15 +112,12 @@ function eraseProduct (nodo){
     let rowErase = btnSupr.parentNode.parentNode;
     let eraseID = rowErase.querySelector("p").textContent;
 
-    function deleteProd(producto){
-        return producto.ident != eraseID;
-    }
     let filtered;
 
     switch (boxName){
         case "Almacen":
             listNodo.innerHTML=``;
-            filtered = marketArr.filter(deleteProd);
+            filtered = marketArr.filter(product => product.ident != eraseID);
             marketArr = filtered;
             let marketJson = JSON.stringify(marketArr);
             localStorage.setItem("marketArr",marketJson);
@@ -121,7 +125,7 @@ function eraseProduct (nodo){
             break;
         case "Bebidas":
             listNodo.innerHTML=``;
-            filtered = drinksArr.filter(deleteProd);
+            filtered = drinksArr.filter(product => product.ident != eraseID);
             drinksArr = filtered;
             let drinksJson = JSON.stringify(drinksArr);
             localStorage.setItem("drinksArr",drinksJson);
@@ -129,7 +133,7 @@ function eraseProduct (nodo){
             break;       
         case "Limpieza":
             listNodo.innerHTML=``;
-            filtered = cleaningArr.filter(deleteProd);
+            filtered = cleaningArr.filter(product => product.ident != eraseID);
             cleaningArr = filtered;
             let cleaningJson = JSON.stringify(cleaningArr);
             localStorage.setItem("cleaningArr",cleaningJson);
@@ -137,7 +141,7 @@ function eraseProduct (nodo){
             break;  
         case "Cuidado Personal":
             listNodo.innerHTML=``;
-            filtered = personalCareArr.filter(deleteProd);
+            filtered = personalCareArr.filter(product => product.ident != eraseID);
             personalCareArr = filtered;
             let personalJson = JSON.stringify(personalCareArr);
             localStorage.setItem("personalCareArr",personalJson);
@@ -168,8 +172,8 @@ function newProduct (nod){
     let prodName = inputs.querySelector(".nameProduct").value.toUpperCase();
     let prodBrand = inputs.querySelector(".brandProduct").value.toUpperCase();
     let prodPrice = Number(inputs.querySelector(".priceProduct").value);
-    let prodProm = Number(inputs.querySelector(".promotionProduct").value);
-    let prodSuper = inputs.querySelector("select").value.toUpperCase();
+    let prodProm = inputs.querySelector(".promotions").value.toUpperCase();
+    let prodSuper = inputs.querySelector(".supermarkets").value.toUpperCase();
     
 
 
@@ -178,7 +182,7 @@ function newProduct (nod){
     prodBrand = prodBrand.trim();
     //VALIDACION DE INGRESO, SI INGRESA MAL NO TENDRIA QUE PUSHEAR NI GRABAR
 
-    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || prodSuper == "" || typeof prodPrice == 'string' || typeof prodProm == 'string'){
+    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodSuper == "" || typeof prodPrice == 'string'){
         Swal.fire({
             title: "Producto no agregado",
             text: "Todos los campos deben estar completos",
@@ -193,7 +197,7 @@ function newProduct (nod){
                 pop:"animate__animated animate__zoomOut"
             }
         });
-    }else if(prodProm == 1 || prodProm ==2 || prodProm == 3){
+    }else{
         
         let allowMarket = marketArr.find(prod => prod.name === prodName && prod.brand === prodBrand && prod.supermarket === prodSuper);
         let allowDrinks = drinksArr.find(prod => prod.name === prodName && prod.brand === prodBrand && prod.supermarket === prodSuper);
@@ -262,25 +266,32 @@ function newProduct (nod){
                 }
             });
         }
-
-        
-        }else{
-            Swal.fire({
-                title: "Producto no agregado",
-                text: "La promocion ingresada es invalida",
-                icon: "error",
-                confirmButtonText:"Volver",
-                color: "rgb(209, 255, 255)",
-                background:"#4d4d4d",
-                showClass: {
-                    popup:"animate__animated animate__zoomIn"
-                },
-                hideClass:{
-                    pop:"animate__animated animate__zoomOut"
-                }
-            });
-        }
     }
+}
+
+//FIRST VISIT
+
+
+if(localStorage.getItem("firstVisit") == null){
+    let firstVisit=true;
+    let firstJson = JSON.stringify(firstVisit);
+    localStorage.setItem("firstVisit",firstJson);
+    Swal.fire({
+        title: "Bienvenido a Changuito",
+        text: "Aquí podrás ver productos de distintos supermercados junto a sus promociones. Los datos se generan a partir de los usuarios de la aplicación ¡Comienza ahora a agregar productos y comparte con el resto tu conocimiento!",
+        icon: "info",
+        confirmButtonText:"Comenzar",
+        color: "rgb(209, 255, 255)",
+        background:"#4d4d4d",
+        showClass: {
+            popup:"animate__animated animate__zoomIn"
+        },
+        hideClass:{
+            pop:"animate__animated animate__zoomOut"
+        }
+    });
+}
+    
 
 //TODO MARKET
 
@@ -451,24 +462,6 @@ if (localStorage.getItem("acumulator")==null){
 
 //CAPTURA DE NODOS Y ASIGNACIÓN DE EVENTOS
 
-let prodSuper = document.getElementById("supermarkets");
-
-prodSuper.addEventListener("change",function (e){
-    switch(e.target.value){
-        case "kilbel":
-            prodSuper = "Kilbel";
-            break;
-        case "tunel":
-            prodSuper = "El Tunel";
-            break;
-        case "makro":
-            prodSuper = "Makro";
-            break;
-        case "walmart":
-            prodSuper = "Walt-Mart";
-            break;
-    }
-});
 
 let btnNewProd = document.querySelectorAll(".btnNewProd");
 for (let boton of btnNewProd){
