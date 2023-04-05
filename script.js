@@ -178,7 +178,7 @@ function newProduct (nod){
     prodBrand = prodBrand.trim();
     //VALIDACION DE INGRESO, SI INGRESA MAL NO TENDRIA QUE PUSHEAR NI GRABAR
 
-    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || prodSuper == "" || typeof prodPrice == 'string' || typeof aux3 == 'string'){
+    if (prodName == "" || prodBrand == "" || prodPrice == "" || prodProm == "" || prodSuper == "" || typeof prodPrice == 'string' || typeof prodProm == 'string'){
         Swal.fire({
             title: "Producto no agregado",
             text: "Todos los campos deben estar completos",
